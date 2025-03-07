@@ -31138,6 +31138,8 @@ async function handleAction() {
         per_page: 10,
     });
     const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags);
+    core.warning(validSortedTags);
+
     if (validSortedTags.length < 2) {
         core.warning(tags);
         core.setFailed('Tag 1' + tags);
@@ -31234,11 +31236,26 @@ exports.parseCommitMessage = parseCommitMessage;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sortAndValidate = void 0;
 const compare_versions_1 = __nccwpck_require__(4773);
+function validateEnvionment(name){
+
+}
+
 function sortAndValidate(tags) {
     return tags
-        //.filter((t) => (0, compare_versions_1.validate)(t.name))
+        .filter((t) => {
+          t['envionment'] = 'dev';
+
+          if(t.name.includes("prd-")){
+            t.name = t.name.replace("prd-", "");
+            t.envionment = 'prd';
+          }else
+          if(t.name.includes("qa-")){
+            t.name = t.name.replace("qa-", "");
+            t.envionment = 'qa';
+          }
+        })
         .sort((a, b) => {
-          
+
         return (0, compare_versions_1.compareVersions)(a.name, b.name);
     })
         .reverse();
