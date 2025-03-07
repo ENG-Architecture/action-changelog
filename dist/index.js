@@ -31253,7 +31253,8 @@ function sortAndValidate(tags) {
             t.name = t.name.replace("qa-", "");
             t.environment = 'qa';
           }
-          t['environment'] = compare_versions_1.validate(t.name);
+          t['validate'] = compare_versions_1.validate(t.name);
+          return t;
         })
         .sort((a, b) => {
           core.warning(a.name +' : '+ b.name);
