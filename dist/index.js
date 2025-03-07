@@ -31139,7 +31139,7 @@ async function handleAction() {
     const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags);
     if (validSortedTags.length < 2) {
         core.warning(sortAndValidateTags_1.sortAndValidate);
-        core.setFailed('No previous tag found');
+        core.setFailed('No previous tag found' + tags);
         return;
     }
     // Find the commits between two tags
