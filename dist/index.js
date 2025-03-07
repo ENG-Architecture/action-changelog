@@ -31241,20 +31241,21 @@ function validateEnvionment(name){
 }
 
 function sortAndValidate(tags) {
-    return tags
-        .filter((t) => {
-          t['environment'] = 'dev';
+    for(t in tags){
+      t['environment'] = 'dev';
 
-          if(t.name.includes("prd")){
-            t.name = t.name.replace("prd-", "");
-            t.environment = 'prd';
-          }else
-          if(t.name.includes("qa")){
-            t.name = t.name.replace("qa-", "");
-            t.environment = 'qa';
-          }
-          return t;
-        })
+      if(t.name.includes("prd")){
+        t.name = t.name.replace("prd-", "");
+        t.environment = 'prd';
+      }else
+      if(t.name.includes("qa")){
+        t.name = t.name.replace("qa-", "");
+        t.environment = 'qa';
+      }
+    }
+
+    return tags
+        .filter((t) => compare_versions_1.validate(t.name))
         .sort((a, b) => {
           core.warning(a.name +' : '+ b.name);
           exports.warning(a.name +' : '+ b.name);
