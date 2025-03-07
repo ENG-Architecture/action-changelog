@@ -30942,25 +30942,25 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DEFAULT_CONFIG = void 0;
 exports.DEFAULT_CONFIG = {
     types: [
-        { label: '🎉 New Features', types: ['feat', 'feature'] },
-        { label: '🐛 Bugfixes', types: ['fix', 'bugfix', 'bug'] },
-        { label: '🔨 Improvements', types: ['improvements', 'enhancement', 'impro', 'enhance'] },
-        { label: '🚀 Performance Improvements', types: ['perf'] },
-        { label: '📚 Documentation Changes', types: ['doc', 'docs'] },
-        { label: '🧪 Quality', types: ['test', 'tests', 'quality'] },
-        { label: '🧱 Build System', types: ['build', 'ci', 'cd', 'workflow', 'cicd'] },
-        { label: '🪚 Refactors', types: ['refactor', 'refac', 'refact', 'ref'] },
-        { label: '💅 Code Style Changes', types: ['style', 'format'] },
-        { label: '🧹 Chores', types: ['chore'] },
-        { label: '🤔 Other Changes', types: ['other'] },
+      { types: ['feat', 'feature'], label: 'New Features' },
+      { types: ['fix', 'bugfix'], label: 'Bugfixes' },
+      { types: ['improvements', 'enhancement'], label: 'Improvements' },
+      { types: ['perf'], label: 'Performance Improvements' },
+      { types: ['build', 'ci'], label: 'Build System' },
+      { types: ['refactor'], label: 'Refactors' },
+      { types: ['doc', 'docs'], label: 'Documentation Changes' },
+      { types: ['test', 'tests'], label: 'Tests' },
+      { types: ['style'], label: 'Code Style Changes' },
+      { types: ['chore'], label: 'Chores' },
+      { types: ['other'], label: 'Other Changes' },
     ],
-    excludeTypes: [],
+    excludeTypes: ['test', 'tests','workflow', 'pipeline', 'ignore'],
     renderTypeSection: (label, commits) => {
-        return `\n## ${label}\n${commits
-            .map((c) => {
-            return `- ${c.scope ? `**${c.scope}:** ` : ''}${c.subject}`;
+      return `\n## ${label}\n${commits
+        .map((c) => {
+          return `- ${c.scope ? `**${c.scope}:** ` : ''}[${c.sha.substring(0, 6)}](${c.url}) : ${c.subject}`;
         })
-            .join('\n')}\n`;
+        .join('\n')}\n`;
     },
     renderNotes: (notes) => {
         return `\n## BREAKING CHANGES\n${notes
