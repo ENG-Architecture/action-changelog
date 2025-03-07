@@ -208,13 +208,19 @@ exports.addPath = addPath;
  */
 function getInput(name, options) {
     const val = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
-    if (options && options.required && !val) {
-      console.warn(process.env);
+    const val2 = process.env[`GITHUB_${name.replace(/ /g, '_').toUpperCase()}`] || '';
+    if (options && options.required && !val && !val2) {
         throw new Error(`Input required and not supplied: ${name}`);
     }
+
+    if(val2){
+      val = val2;
+    }
+
     if (options && options.trimWhitespace === false) {
         return val;
     }
+
     return val.trim();
 }
 exports.getInput = getInput;
@@ -31125,7 +31131,7 @@ function getConfig(path) {
 }
 async function handleAction() {
     const token = core.getInput('token', { required: true });
-    const type = core.getInput('type', { required: true });
+    const type = core.getInput('job', { required: true });
     const octokit = github.getOctokit(token);
     const configFile = core.getInput('config_file', { required: false });
     const config = getConfig(configFile);
@@ -31140,7 +31146,7 @@ async function handleAction() {
         per_page: 10,
     });
     const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags, type);
-    core.warning('type '+type);
+    core.warning('type '+);
     core.warning(validSortedTags);
 
     if (validSortedTags.length < 2) {
