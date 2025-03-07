@@ -31138,7 +31138,7 @@ async function handleAction() {
     });
     const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags);
     if (validSortedTags.length < 2) {
-        core.info(tags);
+        core.warning(sortAndValidateTags_1.sortAndValidate);
         core.setFailed('No previous tag found');
         return;
     }
