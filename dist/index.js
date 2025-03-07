@@ -31241,7 +31241,7 @@ function validateEnvionment(name){
 }
 
 function sortAndValidate(tags) {
-    for(t in tags){
+    for(var t in tags){
       t['environment'] = 'dev';
 
       if(t.name.includes("prd")){
@@ -31252,7 +31252,7 @@ function sortAndValidate(tags) {
         t.name = t.name.replace("qa-", "");
         t.environment = 'qa';
       }
-      t['validate'] = compare_versions_1.validate(t.name);
+      t['environment'] = compare_versions_1.validate(t.name);
     }
 
     return tags
