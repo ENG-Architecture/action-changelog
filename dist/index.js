@@ -207,8 +207,8 @@ exports.addPath = addPath;
  * @returns   string
  */
 function getInput(name, options) {
-    const val = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
-    const val2 = process.env[`GITHUB_${name.replace(/ /g, '_').toUpperCase()}`] || '';
+    let val = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
+    let val2 = process.env[`GITHUB_${name.replace(/ /g, '_').toUpperCase()}`] || '';
     if (options && options.required && !val && !val2) {
         throw new Error(`Input required and not supplied: ${name}`);
     }
