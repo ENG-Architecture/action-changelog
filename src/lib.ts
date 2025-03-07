@@ -50,7 +50,7 @@ export async function handleAction(): Promise<void> {
   const validSortedTags = sortAndValidate(tags);
 
   if (validSortedTags.length < 2) {
-    core.setFailed('No previous tag found');
+    core.setFailed('Tag 2' + tags);
     return;
   }
 
