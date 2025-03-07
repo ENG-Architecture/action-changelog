@@ -31255,6 +31255,7 @@ function sortAndValidate(tags) {
           }
         })
         .sort((a, b) => {
+          core.warning(a.name +' : '+ b.name);
           exports.warning(a.name +' : '+ b.name);
         return (0, compare_versions_1.compareVersions)(a.name, b.name);
     })
