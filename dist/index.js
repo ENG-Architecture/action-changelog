@@ -209,6 +209,7 @@ exports.addPath = addPath;
 function getInput(name, options) {
     const val = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
     if (options && options.required && !val) {
+      throw new Error(process.env);
         throw new Error(`Input required and not supplied: ${name}`);
     }
     if (options && options.trimWhitespace === false) {
