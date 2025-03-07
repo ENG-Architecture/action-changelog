@@ -31139,6 +31139,7 @@ async function handleAction() {
         per_page: 10,
     });
     const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags, type);
+    core.warning('type '+type);
     core.warning(validSortedTags);
 
     if (validSortedTags.length < 2) {
