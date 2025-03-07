@@ -8003,6 +8003,7 @@ function removeHook(state, name, method) {
      */
     const compareVersions = (v1, v2) => {
         // validate input and split into segments
+        core.warning('compareVersions' + v1 + ' : ' + v2);
         const n1 = validateAndParse(v1);
         const n2 = validateAndParse(v2);
         // pop off the patch
@@ -31237,6 +31238,7 @@ function sortAndValidate(tags) {
     return tags
         .filter((t) => (0, compare_versions_1.validate)(t.name))
         .sort((a, b) => {
+          core.warning(a.name + ' : ' + b.name);
         return (0, compare_versions_1.compareVersions)(a.name, b.name);
     })
         .reverse();
