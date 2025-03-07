@@ -31243,19 +31243,19 @@ function validateEnvionment(name){
 function sortAndValidate(tags) {
     return tags
         .filter((t) => {
-          t['envionment'] = 'dev';
+          t['environment'] = 'dev';
 
-          if(t.name.includes("prd-")){
+          if(t.name.includes("prd")){
             t.name = t.name.replace("prd-", "");
-            t.envionment = 'prd';
+            t.environment = 'prd';
           }else
-          if(t.name.includes("qa-")){
+          if(t.name.includes("qa")){
             t.name = t.name.replace("qa-", "");
-            t.envionment = 'qa';
+            t.environment = 'qa';
           }
         })
         .sort((a, b) => {
-
+          warning(a.name +' : '+ b.name);
         return (0, compare_versions_1.compareVersions)(a.name, b.name);
     })
         .reverse();
