@@ -31235,8 +31235,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sortAndValidate = void 0;
 const compare_versions_1 = __nccwpck_require__(4773);
 function sortAndValidate(tags) {
+    core.warning(' sortAndValidate ');
     return tags
-        .filter((t) => (0, compare_versions_1.validate)(t.name))
+        //.filter((t) => (0, compare_versions_1.validate)(t.name))
         .sort((a, b) => {
           core.warning(a.name + ' : ' + b.name);
         return (0, compare_versions_1.compareVersions)(a.name, b.name);
