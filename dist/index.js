@@ -31129,7 +31129,7 @@ function getConfig(path) {
 }
 async function handleAction() {
     const token = core.getInput('token', { required: true });
-    const exp_regular = core.getInput('exp_regular', { required: true });
+    const tag_regex = core.getInput('tag_regex', { required: true });
     const octokit = github.getOctokit(token);
     const configFile = core.getInput('config_file', { required: false });
     const config = getConfig(configFile);
@@ -31143,14 +31143,11 @@ async function handleAction() {
         repo,
         per_page: 10,
     });
-    const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags, exp_regular);
-    core.warning('type '+exp_regular);
-    core.warning(validSortedTags);
+    const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags, tag_regex);
 
     if (validSortedTags.length < 2) {
-        core.warning(tags);
-        core.setFailed('Tag 1' + tags);
-        return;
+      core.setFailed('No previous tag found');
+      return;
     }
     // Find the commits between two tags
     const result = await octokit.rest.repos.compareCommits({
@@ -31247,15 +31244,14 @@ function validateEnvionment(name){
 
 }
 
-function sortAndValidate(tags, expression) {
-    console.log('expression:'+expression);
-    const exp_regular = new RegExp(expression, 'g');
+function sortAndValidate(tags, tag_regex) {
+    const exp_regular = new RegExp(tag_regex, 'g');
     return tags
         .filter((t) => {
 
           t['validate'] = false;
 
-          if(expression){
+          if(tag_regex){
             if (exp_regular.test(t.name)) {
               t.name = t.name.replace(exp_regular, "");
               t.validate = compare_versions_1.validate(t.name);
