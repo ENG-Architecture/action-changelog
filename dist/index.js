@@ -31127,7 +31127,7 @@ function getConfig(path) {
 }
 async function handleAction() {
     const token = core.getInput('token', { required: true });
-    const tag_regex = core.getInput('tag_regex', { required: true });
+    const tag_regex = core.getInput('tag_regex', { required: false });
     const octokit = github.getOctokit(token);
     const configFile = core.getInput('config_file', { required: false });
     const config = getConfig(configFile);
