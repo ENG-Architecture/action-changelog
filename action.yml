@@ -15,10 +15,9 @@ inputs:
   config_file:
     description: Location of the config JSON file
     required: false
-  type:
+  exp_regular:
     description: Location of the config JSON file
     required: false
-    default: 'dev'
 outputs:
   changelog:
     description: Generated changelog for the latest tag

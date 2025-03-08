@@ -31129,7 +31129,7 @@ function getConfig(path) {
 }
 async function handleAction() {
     const token = core.getInput('token', { required: true });
-    const type = core.getInput('type', { required: true });
+    const exp_regular = core.getInput('exp_regular', { required: true });
     const octokit = github.getOctokit(token);
     const configFile = core.getInput('config_file', { required: false });
     const config = getConfig(configFile);
@@ -31143,8 +31143,8 @@ async function handleAction() {
         repo,
         per_page: 10,
     });
-    const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags, type);
-    core.warning('type '+type);
+    const validSortedTags = (0, sortAndValidateTags_1.sortAndValidate)(tags, exp_regular);
+    core.warning('type '+exp_regular);
     core.warning(validSortedTags);
 
     if (validSortedTags.length < 2) {
@@ -31247,26 +31247,24 @@ function validateEnvionment(name){
 
 }
 
-function sortAndValidate(tags, type) {
+function sortAndValidate(tags, expression) {
+    console.log('expression:'+expression);
+    const exp_regular = new RegExp(expression, 'g');
     return tags
         .filter((t) => {
-          t['environment'] = 'dev';
+
           t['validate'] = false;
 
-          if(t.name.includes("prd") ){
-            t.name = t.name.replace("prd-", "");
-            t.environment = 'prd';
-            t.validate = compare_versions_1.validate(t.name);
-          }else
-          if(t.name.includes("qa") ){
-            t.name = t.name.replace("qa-", "");
-            t.environment = 'qa';
-            t.validate = compare_versions_1.validate(t.name);
+          if(expression){
+            if (exp_regular.test(t.name)) {
+              t.name = t.name.replace(exp_regular, "");
+              t.validate = compare_versions_1.validate(t.name);
+            }
           }else{
             t.validate = compare_versions_1.validate(t.name);
           }
           
-          if(t.validate && t.environment == type){
+          if(t.validate){
             return t;
           }
         })
