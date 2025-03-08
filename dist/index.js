@@ -31245,6 +31245,7 @@ function validateEnvionment(name){
 }
 
 function sortAndValidate(tags, tag_regex) {
+    console.log('expression ' +tag_regex);
     const exp_regular = new RegExp(tag_regex, 'g');
     return tags
         .filter((t) => {
@@ -31252,8 +31253,9 @@ function sortAndValidate(tags, tag_regex) {
           t['validate'] = false;
 
           if(tag_regex){
-            if (exp_regular.test(t.name)) {
+            if (exp_regular.test(t.name)) {              
               t.name = t.name.replace(exp_regular, "");
+              console.log('t.name :' +t.name);
               t.validate = compare_versions_1.validate(t.name);
             }
           }else{
