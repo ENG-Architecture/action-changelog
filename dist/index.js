@@ -208,13 +208,11 @@ exports.addPath = addPath;
  */
 function getInput(name, options) {
     let val = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
-    let val2 = process.env[`GITHUB_${name.replace(/ /g, '_').toUpperCase()}`] || '';
-    if (options && options.required && !val && !val2) {
+    console.log(process.env);
+    //let val2 = process.env[`GITHUB_${name.replace(/ /g, '_').toUpperCase()}`] || '';
+    //val = !val2 ? val : val2;
+    if (options && options.required && !val) {
         throw new Error(`Input required and not supplied: ${name}`);
-    }
-
-    if(val2){
-      val = val2;
     }
 
     if (options && options.trimWhitespace === false) {
@@ -31131,7 +31129,7 @@ function getConfig(path) {
 }
 async function handleAction() {
     const token = core.getInput('token', { required: true });
-    const type = core.getInput('job', { required: true });
+    const type = core.getInput('type', { required: true });
     const octokit = github.getOctokit(token);
     const configFile = core.getInput('config_file', { required: false });
     const config = getConfig(configFile);
