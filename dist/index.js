@@ -30958,11 +30958,14 @@ exports.DEFAULT_CONFIG = {
       { types: ['chore'], label: 'Chores' },
       { types: ['other'], label: 'Other Changes' },
     ],
-    excludeTypes: ['test', 'tests','workflow', 'pipeline', 'ignore'],
+    excludeTypes: ['workflow', 'pipeline', 'ignore'],
     renderTypeSection: (label, commits) => {
       return `\n## ${label}\n${commits
         .map((c) => {
-          return `- ${c.scope ? `**${c.scope}:** ` : ''}[${c.sha.substring(0, 6)}](${c.url}) : ${c.subject}`;
+          const exp_regular = new RegExp('TCORE', 'g');
+          if(exp_regular.test(c.subject)){
+            return `- ${c.scope ? `**${c.scope}:** ` : ''}[${c.sha.substring(0, 6)}](${c.url}) : ${c.subject}`;
+          }
         })
         .join('\n')}\n`;
     },
